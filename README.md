@@ -31,5 +31,5 @@ Make sure you have the following installed on your local development machine:
 ## Set up your environment variables:
 ###Create a .env file in the root directory of your project and add the following:
 
-PORT=3500
-MONGO_URI=mongodb://localhost:27017/VyzenFormSubmission
+- PORT=3500
+- MONGO_URI=mongodb://localhost:27017/VyzenNewFormSubmission
