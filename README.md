@@ -10,8 +10,8 @@ Vyzen Submission Form is a simple web application built with Node.js and Express
 
 ![localhost_3500_finalSubmission html](https://github.com/HuligeshBondade/VyzenSubmissionForm/assets/107861136/9495a8c2-c0b7-47e9-b650-bde14e60ebaa)
 
-https://brilliant-pastelito-bfd870.netlify.app/
-https://vyzen-submission-form-qrw81ae2q-huligeshs-projects.vercel.app/
+- https://brilliant-pastelito-bfd870.netlify.app/
+- https://vyzen-submission-form-qrw81ae2q-huligeshs-projects.vercel.app/
 
 ## Features
 
