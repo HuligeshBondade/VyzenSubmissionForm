@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            width: 45%; /* Adjust width as needed */
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+    <h2>Educational Details</h2>
+    <form id="educationForm" onsubmit="submitEducationForm(event)">
+        <div class="form-group">
+            <label for="educationCourse">Education Course *</label>
+            <p>Description: Enter the course you have completed.</p>
+            <input type="text" id="educationCourse" name="educationCourse" required>
+        </div>
+
+        <div class="form-group">
+            <label for="educationSpecialization">Education Specialization *</label>
+            <p>Description: Enter your area of specialization.</p>
+            <input type="text" id="educationSpecialization" name="educationSpecialization" required>
+        </div>
+
+        <div class="form-group">
+            <label for="educationInstitution">Education Institution *</label>
+            <p>Description: Enter the name of the institution where you completed your course.</p>
+            <input type="text" id="educationInstitution" name="educationInstitution" required>
+        </div>
+
+        <div class="form-group">
+            <label for="educationYearOfCompletion">Year of Completion *</label>
+            <p>Description: Enter the year you completed your course.</p>
+            <input type="date" id="educationYearOfCompletion" name="educationYearOfCompletion" required>
+        </div>
+
+        <div class="form-group">
+            <label for="educationPassPercentage">Pass Percentage *</label>
+            <p>Description: Enter the percentage you achieved in your course. Format: 85.6%.</p>
+            <input type="text" id="educationPassPercentage" name="educationPassPercentage" required>
+        </div>
+
+        <div class="form-group">
+            <label for="educationProof">Proof of Education Completion *</label>
+            <p>Description: Upload proof of your education completion.</p>
+            <input type="file" id="educationProof" name="educationProof" required>
+        </div>
+
+        <div class="form-group">
+            <label for="anyCertifications">Any Certifications? *</label><br>
+            <p>Description: Select 'Yes' if you have any certifications, otherwise select 'No'.</p>
+            <input type="radio" id="certificationsYes" name="anyCertifications" value="yes" required>
+            <label for="certificationsYes">Yes</label><br>
+            <input type="radio" id="certificationsNo" name="anyCertifications" value="no" required>
+            <label for="certificationsNo">No</label>
+        </div>
+
+        <div id="certificationsFields" style="display: none;">
+            <div class="form-group">
+                <label for="certificatesObtained">Certificates Obtained</label>
+                <p>Description: List the certifications you have obtained.</p>
+                <input type="text" id="certificatesObtained" name="certificatesObtained">
+            </div>
+
+            <div class="form-group">
+                <label for="certificationIssuingAuthority">Certification Issuing Authority</label>
+                <p>Description: Enter the name of the authority that issued the certificate.</p>
+                <input type="text" id="certificationIssuingAuthority" name="certificationIssuingAuthority">
+            </div>
+
+            <div class="form-group">
+                <label for="certificationCompletionDate">Certification Completion Date</label>
+                <p>Description: Select the date when the certification was issued.</p>
+                <input type="date" id="certificationCompletionDate" name="certificationCompletionDate">
+            </div>
+
+            <div class="form-group">
+                <label for="certificationProof">Proof of Certification</label>
+                <p>Description: Upload proof of your certification.</p>
+                <input type="file" id="certificationProof" name="certificationProof">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="tentativeJoiningDate">Tentative Joining Date *</label>
+            <p>Description: Enter the tentative date you are expected to join.</p>
+            <input type="date" id="tentativeJoiningDate" name="tentativeJoiningDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="fresherStatus">Are you a Fresher? *</label><br>
+            <input type="radio" id="fresherYes" name="fresherStatus" value="yes" required>
+            <label for="fresherYes">Yes</label><br>
+            <input type="radio" id="fresherNo" name="fresherStatus" value="no" required>
+            <label for="fresherNo">No</label>
+        </div>
+
+        <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="submit">Next</button>
+        </div>
+    </form>
+
+    <script>
+        function loadFormData() {
+            // Retrieve form data from localStorage if exists
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                document.getElementById('educationCourse').value = formData.educationCourse || '';
+                document.getElementById('educationSpecialization').value = formData.educationSpecialization || '';
+                document.getElementById('educationInstitution').value = formData.educationInstitution || '';
+                document.getElementById('educationYearOfCompletion').value = formData.educationYearOfCompletion || '';
+                document.getElementById('educationPassPercentage').value = formData.educationPassPercentage || '';
+                document.getElementById('tentativeJoiningDate').value = formData.tentativeJoiningDate || '';
+                document.getElementById('educationProof').value = formData.educationProof || '';
+                document.getElementById('certificationProof').value = formData.certificationProof || '';
+
+                // Check and set radio buttons
+                const anyCertifications = formData.anyCertifications || '';
+                document.getElementById('certificationsYes').checked = anyCertifications === 'yes';
+                document.getElementById('certificationsNo').checked = anyCertifications === 'no';
+
+                // Show certifications fields if 'yes' is selected
+                if (anyCertifications === 'yes') {
+                    document.getElementById('certificationsFields').style.display = 'block';
+                    document.getElementById('certificatesObtained').value = formData.certificatesObtained || '';
+                    document.getElementById('certificationIssuingAuthority').value = formData.certificationIssuingAuthority || '';
+                    document.getElementById('certificationCompletionDate').value = formData.certificationCompletionDate || '';
+                } else {
+                    document.getElementById('certificationsFields').style.display = 'none';
+                }
+            }
+        }
+
+        function saveFormData(newData) {
+            const existingData = JSON.parse(localStorage.getItem('formData')) || {};
+            const mergedData = { ...existingData, ...newData };
+            localStorage.setItem('formData', JSON.stringify(mergedData));
+        }
+
+        function submitEducationForm(event) {
+            event.preventDefault();
+
+            const educationCourse = document.getElementById('educationCourse').value;
+            const educationSpecialization = document.getElementById('educationSpecialization').value;
+            const educationInstitution = document.getElementById('educationInstitution').value;
+            const educationYearOfCompletion = document.getElementById('educationYearOfCompletion').value;
+            const educationPassPercentage = document.getElementById('educationPassPercentage').value;
+            ///const educationProof = document.getElementById('educationProof').files[0];
+            const anyCertifications = document.querySelector('input[name="anyCertifications"]:checked').value;
+            const certificatesObtained = document.getElementById('certificatesObtained').value;
+            const certificationIssuingAuthority = document.getElementById('certificationIssuingAuthority').value;
+            const certificationCompletionDate = document.getElementById('certificationCompletionDate').value;
+            //const certificationProof = document.getElementById('certificationProof').files[0];
+            const tentativeJoiningDate = document.getElementById('tentativeJoiningDate').value;
+            const fresherStatus = document.querySelector('input[name="fresherStatus"]:checked').value;
+
+            const educationProof = document.getElementById('educationProof').files[0] ? document.getElementById('educationProof').files[0].name : '';
+            const certificationProof = document.getElementById('certificationProof').files[0] ? document.getElementById('certificationProof').files[0].name : '';
+
+            if (!educationCourse || !educationSpecialization || !educationInstitution || !educationYearOfCompletion || !educationPassPercentage || !educationProof || !tentativeJoiningDate) {
+                alert('All fields marked with * are required.');
+                return;
+            }
+
+            const formData = {
+                educationCourse,
+                educationSpecialization,
+                educationInstitution,
+                educationYearOfCompletion,
+                educationPassPercentage,
+                educationProof,
+                anyCertifications,
+                certificatesObtained,
+                certificationIssuingAuthority,
+                certificationCompletionDate,
+                certificationProof,
+                tentativeJoiningDate,
+                fresherStatus
+            };
+
+            saveFormData(formData);
+
+            // Simulate form submission success
+            window.location.href = 'acknowledgement.html';
+        }
+
+        function goBack() {
+            window.location.href = 'profession.html';
+        }
+
+        // Show/hide certifications fields based on radio button selection
+        document.addEventListener('DOMContentLoaded', function () {
+            const certificationsYes = document.getElementById('certificationsYes');
+            const certificationsNo = document.getElementById('certificationsNo');
+            const certificationsFields = document.getElementById('certificationsFields');
+
+            certificationsYes.addEventListener('change', function () {
+                certificationsFields.style.display = certificationsYes.checked ? 'block' : 'none';
+            });
+
+            certificationsNo.addEventListener('change', function () {
+                certificationsFields.style.display = certificationsYes.checked ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

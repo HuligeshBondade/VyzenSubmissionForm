@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Application Form - VYZEN</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="loadFormData()">
+    <h2>Candidate Application Form - VYZEN</h2>
+    <form id="formData" onsubmit="return goToNextPage(event)">
+        <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <p>Description: Enter your First Name.</p>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <p>Description: Enter your Middle Name</p>
+            <input type="text" id="middleName" name="middleName">
+        </div>
+        
+        <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <p>Description: Enter your Last Name.</p>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="contactNumber">Contact Number*</label>
+            <p>Description: Enter a contact number. <br>Format: +(Country Code)[Number]. </p>
+            <input type="text" id="contactNumber" name="contactNumber" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="alternateContactNumber">Alternate Contact Number</label>
+            <p>Description: Enter an alternate number. <br>Format: +(Country Code)[Number]. 
+            </p>
+            <input type="text" id="alternateContactNumber" name="alternateContactNumber">
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email ID *</label>
+            <p>Description: Enter your email address. <br>Format: example@example.com.</p>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="dateOfBirth">Date of Birth *</label>
+            <p>Description: Select your date of birth from the calendar.</p>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="age">Age *</label>
+            <p>Description: Enter your age. Format: 25.</p>
+            <input type="number" id="age" name="age" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Gender *</label>
+            <input type="radio" id="male" name="gender" value="Male" required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label>
+            <input type="radio" id="preferNotToSay" name="gender" value="Prefer not to say">
+            <label for="preferNotToSay">Prefer not to say</label>
+        </div>
+        
+        <div class="form-group">
+            <label>Marital Status *</label>
+            <input type="radio" id="married" name="maritalStatus" value="Married" required>
+            <label for="married">Married</label>
+            <input type="radio" id="unmarried" name="maritalStatus" value="Unmarried">
+            <label for="unmarried">Unmarried</label>
+            <input type="radio" id="maritalPreferNotToSay" name="maritalStatus" value="Prefer not to say">
+            <label for="maritalPreferNotToSay">Prefer not to say</label>
+        </div>
+        
+        <div class="form-group">
+            <label for="nationality">Nationality / Citizen *</label>
+            <p>Description: Enter the name of the country of nationality or citizenship.</p>
+            <input type="text" id="nationality" name="nationality" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="bloodGroup">Blood Group *</label>
+            <p>Description: Enter your blood group. Format: O+, A-, etc.</p>
+            <input type="text" id="bloodGroup" name="bloodGroup" required>
+        </div>
+        
+        <button type="submit">Next</button>
+    </form>
+
+    <script>
+        function loadFormData() {
+            // Retrieve form data from localStorage if exists
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                document.getElementById('firstName').value = formData.firstName || '';
+                document.getElementById('middleName').value = formData.middleName || '';
+                document.getElementById('lastName').value = formData.lastName || '';
+                document.getElementById('contactNumber').value = formData.contactNumber || '';
+                document.getElementById('alternateContactNumber').value = formData.alternateContactNumber || '';
+                document.getElementById('email').value = formData.email || '';
+                document.getElementById('dateOfBirth').value = formData.dateOfBirth || '';
+                document.getElementById('age').value = formData.age || '';
+                
+                // Gender
+                const gender = formData.gender;
+                if (gender) {
+                    document.getElementById(gender.toLowerCase()).checked = true;
+                }
+                
+                // Marital Status
+                const maritalStatus = formData.maritalStatus;
+                if (maritalStatus) {
+                    document.getElementById(maritalStatus.toLowerCase()).checked = true;
+                }
+                
+                document.getElementById('nationality').value = formData.nationality || '';
+                document.getElementById('bloodGroup').value = formData.bloodGroup || '';
+            }
+        }
+
+        function goToNextPage(event) {
+            event.preventDefault();
+
+            // Basic validation for required fields
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const email = document.getElementById('email').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+            const age = document.getElementById('age').value;
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const maritalStatus = document.querySelector('input[name="maritalStatus"]:checked');
+            const nationality = document.getElementById('nationality').value;
+            const bloodGroup = document.getElementById('bloodGroup').value;
+
+            if (!firstName || !lastName || !contactNumber || !email || !dateOfBirth || !age || !gender || !maritalStatus || !nationality || !bloodGroup) {
+                alert('All fields marked with * are required.');
+                return;
+            }
+
+            // Store form data in local storage (or you can use session storage)
+            const formData = {
+                firstName,
+                lastName,
+                contactNumber,
+                email,
+                dateOfBirth,
+                age,
+                gender: gender.value,
+                maritalStatus: maritalStatus.value,
+                nationality,
+                bloodGroup
+            };
+
+            localStorage.setItem('formData', JSON.stringify(formData));
+            window.location.href = 'address.html';
+        }
+    </script>
+</body>
+</html>

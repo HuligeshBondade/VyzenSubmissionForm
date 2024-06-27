@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            width: 45%; /* Adjust width as needed */
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+    <h2>Address Information</h2>
+    <form id="addressForm" onsubmit="submitAddressForm(event)">
+        <div class="form-group">
+            <label for="currentAddress">Current Residential Address *</label>
+            <p>Description: Enter your current residential address in full along with <br>
+                City <br>
+                State <br>
+                Postal Code
+            </p>
+            <input type="text" id="currentAddress" name="currentAddress" required>
+        </div>
+
+        <div class="form-group">
+            <label for="permanentAddress">Permanent Residential Address *</label>
+            <p>Description: Enter your permanent address in full along with <br>
+                City <br>
+                State <br>
+                Postal Code
+            </p>
+            <input type="text" id="permanentAddress" name="permanentAddress" required>
+        </div>
+
+        <div class="form-group">
+            <label for="currentLocation">Current Location *</label>
+            <p>Description: Enter your current city of residence.</p>
+            <input type="text" id="currentLocation" name="currentLocation" required>
+        </div>
+
+        <div class="form-group">
+            <label for="preferredLocation">Preferred Location *</label>
+            <p>Description: Enter your preferred city of residence.</p>
+            <input type="text" id="preferredLocation" name="preferredLocation" required>
+        </div>
+
+        <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="button" onclick="saveAndProceed()">Next</button>
+        </div>
+    </form>
+
+    <script>
+        function loadFormData() {
+            // Retrieve form data from localStorage if exists
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                document.getElementById('currentAddress').value = formData.currentAddress || '';
+                document.getElementById('permanentAddress').value = formData.permanentAddress || '';
+                document.getElementById('currentLocation').value = formData.currentLocation || '';
+                document.getElementById('preferredLocation').value = formData.preferredLocation || '';
+            }
+        }
+
+        function saveAndProceed() {
+            const currentAddress = document.getElementById('currentAddress').value;
+            const permanentAddress = document.getElementById('permanentAddress').value;
+            const currentLocation = document.getElementById('currentLocation').value;
+            const preferredLocation = document.getElementById('preferredLocation').value;
+
+            if (!currentAddress || !permanentAddress || !currentLocation || !preferredLocation) {
+                alert('All fields marked with * are required.');
+                return;
+            }
+
+            const formData = JSON.parse(localStorage.getItem('formData')) || {};
+            const addressData = {
+                currentAddress,
+                permanentAddress,
+                currentLocation,
+                preferredLocation
+            };
+
+            const completeFormData = {
+                ...formData,
+                ...addressData
+            };
+
+            localStorage.setItem('formData', JSON.stringify(completeFormData));
+            window.location.href = 'identification.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

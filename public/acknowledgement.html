@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acknowledgement and Consent</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            width: 45%;
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+    <h2>Acknowledgement and Consent</h2>
+    <form id="acknowledgementForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+            <label>Consent to conduct background checks *</label>
+            <br>
+            <input type="radio" id="backgroundCheckYes" name="backgroundCheck" value="Yes" required>
+            <label for="backgroundCheckYes">Yes</label>
+            <br>
+            <input type="radio" id="backgroundCheckNo" name="backgroundCheck" value="No">
+            <label for="backgroundCheckNo">No</label>
+            <br>
+            <input type="radio" id="backgroundCheckMaybe" name="backgroundCheck" value="Maybe">
+            <label for="backgroundCheckMaybe">Maybe</label>
+        </div>
+
+        <div class="form-group">
+            <label>Consent to Drug/Alcohol Testing *</label>
+            <br>
+            <input type="radio" id="drugTestingYes" name="drugTesting" value="Yes" required>
+            <label for="drugTestingYes">Yes</label>
+            <br>
+            <input type="radio" id="drugTestingNo" name="drugTesting" value="No">
+            <label for="drugTestingNo">No</label>
+            <br>
+            <input type="radio" id="drugTestingMaybe" name="drugTesting" value="Maybe">
+            <label for="drugTestingMaybe">Maybe</label>
+        </div>
+
+        <div class="form-group">
+            <label>Disclosure of any Criminal Convictions or Pending Criminal Cases *</label>
+            <p>Description: Select 'Yes' if you have any criminal conviction or pending criminal cases, otherwise select 'No'.</p>
+            <br>
+            <input type="radio" id="criminalConvictionsYes" name="criminalConvictions" value="Yes" required>
+            <label for="criminalConvictionsYes">Yes</label>
+            <br>
+            <input type="radio" id="criminalConvictionsNo" name="criminalConvictions" value="No">
+            <label for="criminalConvictionsNo">No</label>
+        </div>
+
+        <div class="form-group">
+            <label for="criminalConvictionsDetails">Details of any Criminal Convictions or Pending Criminal Cases</label>
+            <p>Description: If you selected 'Yes' above, please provide details of your criminal convictions or pending criminal cases, including charges, dates, and outcomes.</p>
+            <textarea id="criminalConvictionsDetails" name="criminalConvictionsDetails" rows="4" cols="50"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>By submitting this form, I acknowledge that all the information provided is true and accurate to the best of my knowledge. *</label>
+            <br>
+            <input type="radio" id="acknowledgementYes" name="acknowledgement" value="Yes" required>
+            <label for="acknowledgementYes">Yes</label>
+            <br>
+            <input type="radio" id="acknowledgementNo" name="acknowledgement" value="No">
+            <label for="acknowledgementNo">No</label>
+        </div>
+
+        <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="submit">Next</button>
+        </div>
+    </form>
+
+    <script>
+        function loadFormData() {
+            const formData = JSON.parse(localStorage.getItem('formData')) || {};
+            if (formData.backgroundCheck) {
+                document.querySelector(`input[name="backgroundCheck"][value="${formData.backgroundCheck}"]`).checked = true;
+            }
+            if (formData.drugTesting) {
+                document.querySelector(`input[name="drugTesting"][value="${formData.drugTesting}"]`).checked = true;
+            }
+            if (formData.criminalConvictions) {
+                document.querySelector(`input[name="criminalConvictions"][value="${formData.criminalConvictions}"]`).checked = true;
+                document.getElementById('criminalConvictionsDetails').value = formData.criminalConvictionsDetails || '';
+            }
+            if (formData.acknowledgement) {
+                document.querySelector(`input[name="acknowledgement"][value="${formData.acknowledgement}"]`).checked = true;
+            }
+        }
+
+        function saveFormData() {
+            const backgroundCheck = document.querySelector('input[name="backgroundCheck"]:checked')?.value;
+            const drugTesting = document.querySelector('input[name="drugTesting"]:checked')?.value;
+            const criminalConvictions = document.querySelector('input[name="criminalConvictions"]:checked')?.value;
+            const criminalConvictionsDetails = document.getElementById('criminalConvictionsDetails').value;
+            const acknowledgement = document.querySelector('input[name="acknowledgement"]:checked')?.value;
+
+            if (!backgroundCheck || !drugTesting || !criminalConvictions || !acknowledgement) {
+                alert('All fields marked with * are required.');
+                return;
+            }
+
+            const formData = {
+                backgroundCheck,
+                drugTesting,
+                criminalConvictions,
+                criminalConvictionsDetails,
+                acknowledgement
+            };
+
+            const existingData = JSON.parse(localStorage.getItem('formData')) || {};
+            const mergedData = { ...existingData, ...formData };
+            localStorage.setItem('formData', JSON.stringify(mergedData));
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            saveFormData();
+            window.location.href = 'finalSubmission.html';
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

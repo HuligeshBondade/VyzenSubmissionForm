@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Links and Documents</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            width: 45%; /* Adjust width as needed */
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+    <h2>Professional Links and Documents</h2>
+    <form id="professionalForm" onsubmit="submitProfessionalForm(event)">
+
+        <div class="form-group">
+            <label for="photograph">Photograph *</label>
+            <p>Description: Upload a recent passport-sized photograph.</p>
+            <input type="file" id="photograph" name="photograph" required>
+        </div>
+
+        <div class="form-group">
+            <label for="workLink">Work Link/Portfolio (LinkedIn) *</label>
+            <p>Description: Provide a link to your LinkedIn profile or online portfolio.</p>
+            <input type="text" id="workLink" name="workLink" required>
+        </div>
+
+        <div class="form-group">
+            <label for="resume">Please attach your updated Resume/CV *</label>
+            <p>Description: Upload your resume and portfolio.</p>
+            <input type="file" id="resume" name="resume" required>
+        </div>
+
+        <div class="form-group">
+            <label for="socialMediaLinks">Please share the links of your Social Media Profiles *</label>
+            <p>Description: Provide links to your social media profiles.</p>
+            <input type="text" id="socialMediaLinks" name="socialMediaLinks" required>
+        </div>
+
+        <div class="form-group">
+            <label for="portfolioLink">Please share the links of your Online Portfolio or Website (if applicable) If none please mention NA *</label>
+            <p>Description: Provide the link to your online portfolio or personal website.</p>
+            <input type="text" id="portfolioLink" name="portfolioLink">
+        </div>
+
+        <div class="form-group">
+            <label for="skills">Skills *</label>
+            <p>List down all the Skills you possess.</p>
+            <textarea id="skills" name="skills" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="languages">Languages *</label>
+            <p>List the Languages you are Proficient in.</p>
+            <textarea id="languages" name="languages" rows="4" required></textarea>
+        </div>
+
+        <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="button" onclick="saveAndProceedToEducation()">Next</button>
+        </div>
+    </form>
+
+    <script>
+        function loadFormData() {
+            // Retrieve form data from localStorage if exists
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                document.getElementById('workLink').value = formData.workLink || '';
+                document.getElementById('socialMediaLinks').value = formData.socialMediaLinks || '';
+                document.getElementById('portfolioLink').value = formData.portfolioLink || '';
+                document.getElementById('skills').value = formData.skills || '';
+                document.getElementById('languages').value = formData.languages || '';
+                document.getElementById('photograph').value = formData.photograph || '';
+                document.getElementById('resume').value = formData.resume || '';
+            }
+        }
+
+        function saveAndProceedToEducation() {
+            const formData = JSON.parse(localStorage.getItem('formData')) || {};
+
+            //const photograph = document.getElementById('photograph').files[0];
+            const workLink = document.getElementById('workLink').value;
+            //const resume = document.getElementById('resume').files[0];
+            const socialMediaLinks = document.getElementById('socialMediaLinks').value;
+            const portfolioLink = document.getElementById('portfolioLink').value;
+            const skills = document.getElementById('skills').value;
+            const languages = document.getElementById('languages').value;
+
+            const photograph = document.getElementById('photograph').files[0] ? document.getElementById('photograph').files[0].name : '';
+            const resume = document.getElementById('resume').files[0] ? document.getElementById('resume').files[0].name : '';
+
+            if (!photograph || !workLink || !resume || !socialMediaLinks || !skills || !languages) {
+                alert('All fields marked with * are required.');
+                return;
+            }
+
+            const professionalData = {
+                photograph,
+                workLink,
+                resume,
+                socialMediaLinks,
+                portfolioLink,
+                skills,
+                languages
+            };
+
+            const completeFormData = {
+                ...formData,
+                ...professionalData
+            };
+
+            localStorage.setItem('formData', JSON.stringify(completeFormData));
+            window.location.href = 'education.html';
+        }
+
+        function goBack() {
+            window.location.href = 'identification.html';
+        }
+    </script>
+</body>
+</html>

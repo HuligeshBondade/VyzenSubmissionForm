@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review and Submit - VYZEN</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            width: 45%; /* Adjust width as needed */
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+    <h2>Review and Submit</h2>
+    <form id="finalForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+            <h3>Personal Details</h3>
+            <p>First Name: <span id="reviewFirstName"></span></p>
+            <p>Last Name: <span id="reviewLastName"></span></p>
+            <p>Contact Number: <span id="reviewContactNumber"></span></p>
+            <p>Email: <span id="reviewEmail"></span></p>
+            <p>Date of Birth: <span id="reviewDateOfBirth"></span></p>
+            <p>Age: <span id="reviewAge"></span></p>
+            <p>Gender: <span id="reviewGender"></span></p>
+            <p>Marital Status: <span id="reviewMaritalStatus"></span></p>
+            <p>Nationality: <span id="reviewNationality"></span></p>
+            <p>Blood Group: <span id="reviewBloodGroup"></span></p>
+        </div>
+
+        <div class="form-group">
+            <h3>Address Details</h3>
+            <p>Current Address: <span id="reviewCurrentAddress"></span></p>
+            <p>Permanent Address: <span id="reviewPermanentAddress"></span></p>
+            <p>Current Location: <span id="reviewCurrentLocation"></span></p>
+            <p>Preferred Location: <span id="reviewPreferredLocation"></span></p>
+        </div>
+
+        <div class="form-group">
+            <h3>Identification Documents</h3>
+            <p>Passport: <span id="reviewPassport"></span></p>
+            <p>Passport Number: <span id="reviewPassportNumber"></span></p>
+            <p>Passport Copy: <span id="reviewPassportCopy"></span></p>
+            <p>Aadhaar Card Number: <span id="reviewAadhaarNo"></span></p>
+            <p>Aadhaar Card Copy: <span id="reviewAadhaarCopy"></span></p>
+            <p>PAN Card Number: <span id="reviewPanNo"></span></p>
+            <p>PAN Card Copy: <span id="reviewPanCopy"></span></p>
+            <p>Driving License: <span id="reviewDL"></span></p>
+            <p>Driving License Copy: <span id="reviewDLCopy"></span></p>
+            <p>Voter ID: <span id="reviewVoterID"></span></p>
+            <p>Voter ID Copy: <span id="reviewVoterIDCopy"></span></p>
+        </div>
+
+        <div class="form-group">
+            <h3>Professional Links and Documents</h3>
+            <p>Photograph: <span id="reviewPhotograph"></span></p>
+            <p>Work Link: <span id="reviewWorkLink"></span></p>
+            <p>Resume: <span id="reviewResume"></span></p>
+            <p>Social Media Links: <span id="reviewSocialMediaLinks"></span></p>
+            <p>Portfolio Link: <span id="reviewPortfolioLink"></span></p>
+            <p>Skills: <span id="reviewSkills"></span></p>
+            <p>Languages: <span id="reviewLanguages"></span></p>
+        </div>
+
+        <div class="form-group">
+            <h3>Educational Details</h3>
+            <p>Education Course: <span id="reviewEducationCourse"></span></p>
+            <p>Education Specialization: <span id="reviewEducationSpecialization"></span></p>
+            <p>Education Institution: <span id="reviewEducationInstitution"></span></p>
+            <p>Education Year Of Completion: <span id="reviewEducationYearOfCompletion"></span></p>
+            <p>Education Pass Percentage: <span id="reviewEducationPassPercentage"></span></p>
+            <p>Education Proof: <span id="reviewEducationProof"></span></p>
+            <p>Any Certifications: <span id="reviewAnyCertifications"></span></p>
+            <p>Certificates Obtained: <span id="reviewCertificatesObtained"></span></p>
+            <p>Certification Issuing Authority: <span id="reviewCertificationIssuingAuthority"></span></p>
+            <p>Certification Completion Date: <span id="reviewCertificationCompletionDate"></span></p>
+            <p>Certification Proof: <span id="reviewCertificationProof"></span></p>
+            <p>Tentative Joining Date: <span id="reviewTentativeJoiningDate"></span></p>
+            <p>Fresher Status: <span id="reviewFresherStatus"></span></p>
+        </div>
+
+        <div class="form-group">
+            <h3>Acknowledgement and Consent</h3>
+            <p>Background Check: <span id="reviewBackgroundCheck"></span></p>
+            <p>Drug Testing: <span id="reviewDrugTesting"></span></p>
+            <p>Criminal Convictions: <span id="reviewCriminalConvictions"></span></p>
+            <p>Criminal Convictions Details: <span id="reviewCriminalConvictionsDetails"></span></p>
+            <p>Acknowledgement: <span id="reviewAcknowledgement"></span></p>
+        </div>
+
+        <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <script>
+        function loadFormData() {
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                document.getElementById('reviewFirstName').innerText = formData.firstName;
+                document.getElementById('reviewLastName').innerText = formData.lastName;
+                document.getElementById('reviewContactNumber').innerText = formData.contactNumber;
+                document.getElementById('reviewEmail').innerText = formData.email;
+                document.getElementById('reviewDateOfBirth').innerText = formData.dateOfBirth;
+                document.getElementById('reviewAge').innerText = formData.age;
+                document.getElementById('reviewGender').innerText = formData.gender;
+                document.getElementById('reviewMaritalStatus').innerText = formData.maritalStatus;
+                document.getElementById('reviewNationality').innerText = formData.nationality;
+                document.getElementById('reviewBloodGroup').innerText = formData.bloodGroup;
+
+                document.getElementById('reviewCurrentAddress').innerText = formData.currentAddress;
+                document.getElementById('reviewPermanentAddress').innerText = formData.permanentAddress;
+                document.getElementById('reviewCurrentLocation').innerText = formData.currentLocation;
+                document.getElementById('reviewPreferredLocation').innerText = formData.preferredLocation;
+
+                document.getElementById('reviewPassport').innerText = formData.hasPassport;
+                document.getElementById('reviewPassportNumber').innerText = formData.passportNumber;
+                document.getElementById('reviewPassportCopy').innerText = formData.passportCopy;
+                document.getElementById('reviewAadhaarNo').innerText = formData.aadhaarNumber;
+                document.getElementById('reviewAadhaarCopy').innerText = formData.aadhaarCopy;
+                document.getElementById('reviewPanNo').innerText = formData.panNumber;
+                document.getElementById('reviewPanCopy').innerText = formData.panCopy;
+                document.getElementById('reviewDL').innerText = formData.drivingLicenseNumber;
+                document.getElementById('reviewDLCopy').innerText = formData.drivingLicenseCopy;
+                document.getElementById('reviewVoterID').innerText = formData.voterIdNumber;
+                document.getElementById('reviewVoterIDCopy').innerText = formData.voterIdCopy;
+
+                document.getElementById('reviewPhotograph').innerText = formData.photograph;
+                document.getElementById('reviewWorkLink').innerText = formData.workLink;
+                document.getElementById('reviewResume').innerText = formData.resume;
+                document.getElementById('reviewSocialMediaLinks').innerText = formData.socialMediaLinks;
+                document.getElementById('reviewPortfolioLink').innerText = formData.portfolioLink;
+                document.getElementById('reviewSkills').innerText = formData.skills;
+                document.getElementById('reviewLanguages').innerText = formData.languages;
+
+                document.getElementById('reviewEducationCourse').innerText = formData.educationCourse;
+                document.getElementById('reviewEducationSpecialization').innerText = formData.educationSpecialization;
+                document.getElementById('reviewEducationInstitution').innerText = formData.educationInstitution;
+                document.getElementById('reviewEducationYearOfCompletion').innerText = formData.educationYearOfCompletion;
+                document.getElementById('reviewEducationPassPercentage').innerText = formData.educationPassPercentage;
+                document.getElementById('reviewEducationProof').innerText = formData.educationProof;
+                document.getElementById('reviewAnyCertifications').innerText = formData.anyCertifications;
+                document.getElementById('reviewCertificatesObtained').innerText = formData.certificatesObtained;
+                document.getElementById('reviewCertificationIssuingAuthority').innerText = formData.certificationIssuingAuthority;
+                document.getElementById('reviewCertificationCompletionDate').innerText = formData.certificationCompletionDate;
+                document.getElementById('reviewCertificationProof').innerText = formData.certificationProof;
+                document.getElementById('reviewTentativeJoiningDate').innerText = formData.tentativeJoiningDate;
+                document.getElementById('reviewFresherStatus').innerText = formData.fresherStatus;
+
+                document.getElementById('reviewBackgroundCheck').innerText = formData.backgroundCheck;
+                document.getElementById('reviewDrugTesting').innerText = formData.drugTesting;
+                document.getElementById('reviewCriminalConvictions').innerText = formData.criminalConvictions;
+                document.getElementById('reviewCriminalConvictionsDetails').innerText = formData.criminalConvictionsDetails;
+                document.getElementById('reviewAcknowledgement').innerText = formData.acknowledgement;
+            }
+        }
+
+        async function submitForm(event) {
+            event.preventDefault();
+
+            const formData = {
+                firstName: document.getElementById('reviewFirstName').innerText,
+                lastName: document.getElementById('reviewLastName').innerText,
+                contactNumber: document.getElementById('reviewContactNumber').innerText,
+                email: document.getElementById('reviewEmail').innerText,
+                dateOfBirth: document.getElementById('reviewDateOfBirth').innerText,
+                age: document.getElementById('reviewAge').innerText,
+                gender: document.getElementById('reviewGender').innerText,
+                maritalStatus: document.getElementById('reviewMaritalStatus').innerText,
+                nationality: document.getElementById('reviewNationality').innerText,
+                bloodGroup: document.getElementById('reviewBloodGroup').innerText,
+
+                currentAddress: document.getElementById('reviewCurrentAddress').innerText,
+                permanentAddress: document.getElementById('reviewPermanentAddress').innerText,
+                currentLocation: document.getElementById('reviewCurrentLocation').innerText,
+                preferredLocation: document.getElementById('reviewPreferredLocation').innerText,
+
+                hasPassport: document.getElementById('reviewPassport').innerText,
+                passportNumber: document.getElementById('reviewPassportNumber').innerText,
+                passportCopy: document.getElementById('reviewPassportCopy').innerText,
+                aadhaarNumber: document.getElementById('reviewAadhaarNo').innerText,
+                aadhaarCopy: document.getElementById('reviewAadhaarCopy').innerText,
+                panNumber: document.getElementById('reviewPanNo').innerText,
+                panCopy: document.getElementById('reviewPanCopy').innerText,
+                drivingLicenseNumber: document.getElementById('reviewDL').innerText,
+                drivingLicenseCopy: document.getElementById('reviewDLCopy').innerText,
+                voterIdNumber: document.getElementById('reviewVoterID').innerText,
+                voterIdCopy: document.getElementById('reviewVoterIDCopy').innerText,
+
+                photograph: document.getElementById('reviewPhotograph').innerText,
+                workLink: document.getElementById('reviewWorkLink').innerText,
+                resume: document.getElementById('reviewResume').innerText,
+                socialMediaLinks: document.getElementById('reviewSocialMediaLinks').innerText,
+                portfolioLink: document.getElementById('reviewPortfolioLink').innerText,
+                skills: document.getElementById('reviewSkills').innerText,
+                languages: document.getElementById('reviewLanguages').innerText,
+
+                educationCourse: document.getElementById('reviewEducationCourse').innerText,
+                educationSpecialization: document.getElementById('reviewEducationSpecialization').innerText,
+                educationInstitution: document.getElementById('reviewEducationInstitution').innerText,
+                educationYearOfCompletion: document.getElementById('reviewEducationYearOfCompletion').innerText,
+                educationPassPercentage: document.getElementById('reviewEducationPassPercentage').innerText,
+                educationProof: document.getElementById('reviewEducationProof').innerText,
+                anyCertifications: document.getElementById('reviewAnyCertifications').innerText,
+                certificatesObtained: document.getElementById('reviewCertificatesObtained').innerText,
+                certificationIssuingAuthority: document.getElementById('reviewCertificationIssuingAuthority').innerText,
+                certificationCompletionDate: document.getElementById('reviewCertificationCompletionDate').innerText,
+                certificationProof: document.getElementById('reviewCertificationProof').innerText,
+                tentativeJoiningDate: document.getElementById('reviewTentativeJoiningDate').innerText,
+                fresherStatus: document.getElementById('reviewFresherStatus').innerText,
+
+                backgroundCheck: document.getElementById('reviewBackgroundCheck').innerText,
+                drugTesting: document.getElementById('reviewDrugTesting').innerText,
+                criminalConvictions: document.getElementById('reviewCriminalConvictions').innerText,
+                criminalConvictionsDetails: document.getElementById('reviewCriminalConvictionsDetails').innerText,
+                acknowledgement: document.getElementById('reviewAcknowledgement').innerText
+            };
+
+            try {
+                const response = await fetch('/api/form/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+
+                alert('Form submitted successfully');
+                localStorage.removeItem('formData');
+                //window.location.href = 'success.html';
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

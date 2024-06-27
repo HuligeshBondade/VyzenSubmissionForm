@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identification Documents</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            width: 45%; /* Adjust width as needed */
+        }
+    </style>
+</head>
+<body onload="loadFormData()">
+    <h2>Identification Documents</h2>
+    <form id="identificationForm" onsubmit="submitIdentificationForm(event)">
+        <div class="form-group">
+            <label>Do you have a passport? *</label>
+            <p>Description: Select 'Yes' if you have a passport, otherwise select 'No'.</p>
+            <br>
+            <input type="radio" id="passportYes" name="hasPassport" value="yes" required>
+            <label for="passportYes">Yes</label>
+            <br>
+            <input type="radio" id="passportNo" name="hasPassport" value="no">
+            <label for="passportNo">No</label>
+        </div>
+
+        <div class="form-group">
+            <label for="passportNumber">Passport Number</label>
+            <p>Description: If you selected 'Yes' above, enter your passport number.</p>
+            <input type="text" id="passportNumber" name="passportNumber">
+        </div>
+
+        <div class="form-group">
+            <label for="passportCopy">Upload your Passport Copy</label>
+            <p>Description: If you selected 'Yes' above, Upload a copy of your passport</p>
+            <input type="file" id="passportCopy" name="passportCopy">
+        </div>
+
+        <div class="form-group">
+            <label for="aadhaarNumber">Aadhaar Card Number *</label>
+            <p>Description: Enter your Aadhaar card number.</p>
+            <input type="text" id="aadhaarNumber" name="aadhaarNumber" required>
+        </div>
+
+        <div class="form-group">
+            <label for="aadhaarCopy">Upload your Aadhaar Card Copy</label>
+            <p>Description: If you selected 'Yes' above, Upload a copy of your Aadhaar Card</p>
+            <input type="file" id="aadhaarCopy" name="aadhaarCopy">
+        </div>
+
+        <div class="form-group">
+            <label for="panNumber">PAN Card Number*</label>
+            <p>Description: Enter your PAN card number</p>
+            <input type="text" id="panNumber" name="panNumber" required>
+        </div>
+
+        <div class="form-group">
+            <label for="panCopy">Upload your PAN Card Copy</label>
+            <p>Description: If you selected 'Yes' above, Upload a copy of your PAN Card. </p>
+            <input type="file" id="panCopy" name="panCopy">
+        </div>
+
+        <div class="form-group">
+            <label for="drivingLicenseNumber">Driving License Details (if applicable)</label>
+            <p>Description: Enter your driving license number if applicable.</p>
+            <input type="text" id="drivingLicenseNumber" name="drivingLicenseNumber">
+        </div>
+
+        <div class="form-group">
+            <label for="drivingLicenseCopy">Upload your Driving License Copy</label>
+            <p>Description: If you selected 'Yes' above, Upload a copy of your Driving License Card.</p>
+            <input type="file" id="drivingLicenseCopy" name="drivingLicenseCopy">
+        </div>
+
+        <div class="form-group">
+            <label for="voterIdNumber">Voter ID Card Details (if applicable)</label>
+            <p>Description: Enter your Voter ID card number if applicable.</p>
+            <input type="text" id="voterIdNumber" name="voterIdNumber">
+        </div>
+
+        <div class="form-group">
+            <label for="voterIdCopy">Upload your Voter ID Copy</label>
+            <p>Description: If you selected 'Yes' above, Upload a copy of your Voter ID Card</p>
+            <input type="file" id="voterIdCopy" name="voterIdCopy">
+        </div>
+
+        <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="button" onclick="saveAndProceedToProfessional()">Next</button>
+        </div>
+    </form>
+
+    <script>
+        function loadFormData() {
+            // Retrieve form data from localStorage if exists
+            const formData = JSON.parse(localStorage.getItem('formData'));
+            if (formData) {
+                document.querySelector(`input[name="hasPassport"][value="${formData.hasPassport || ''}"]`).checked = true;
+                document.getElementById('passportNumber').value = formData.passportNumber || '';
+                document.getElementById('aadhaarNumber').value = formData.aadhaarNumber || '';
+                document.getElementById('panNumber').value = formData.panNumber || '';
+                document.getElementById('drivingLicenseNumber').value = formData.drivingLicenseNumber || '';
+                document.getElementById('voterIdNumber').value = formData.voterIdNumber || '';
+                document.getElementById('passportCopy').value = formData.passportCopy || '';
+                document.getElementById('aadhaarCopy').value = formData.aadhaarCopy || '';
+                document.getElementById('panCopy').value = formData.panCopy || '';
+                document.getElementById('drivingLicenseCopy').value = formData.drivingLicenseCopy || '';
+                document.getElementById('voterIdCopy').value = formData.voterIdCopy || '';
+            }
+        }
+
+        function saveAndProceedToProfessional() {
+            const hasPassport = document.querySelector('input[name="hasPassport"]:checked').value;
+            const passportNumber = document.getElementById('passportNumber').value;
+            const aadhaarNumber = document.getElementById('aadhaarNumber').value;
+            const panNumber = document.getElementById('panNumber').value;
+            const drivingLicenseNumber = document.getElementById('drivingLicenseNumber').value;
+            const voterIdNumber = document.getElementById('voterIdNumber').value;
+
+            const passportCopy = document.getElementById('passportCopy').files[0] ? document.getElementById('passportCopy').files[0].name : '';
+            const aadhaarCopy = document.getElementById('aadhaarCopy').files[0] ? document.getElementById('aadhaarCopy').files[0].name : '';
+            const panCopy = document.getElementById('panCopy').files[0] ? document.getElementById('panCopy').files[0].name : '';
+            const drivingLicenseCopy = document.getElementById('drivingLicenseCopy').files[0] ? document.getElementById('drivingLicenseCopy').files[0].name : '';
+            const voterIdCopy = document.getElementById('voterIdCopy').files[0] ? document.getElementById('voterIdCopy').files[0].name : '';
+
+            if (!aadhaarNumber || !panNumber) {
+                alert('All fields marked with * are required.');
+                return;
+            }
+
+            const formData = JSON.parse(localStorage.getItem('formData')) || {};
+            const identificationData = {
+                hasPassport,
+                passportNumber,
+                passportCopy,
+                aadhaarNumber,
+                aadhaarCopy,
+                panNumber,
+                panCopy,
+                drivingLicenseNumber,
+                drivingLicenseCopy,
+                voterIdNumber,
+                voterIdCopy
+            };
+
+            // Merge the identification data with existing form data
+            const updatedFormData = { ...formData, ...identificationData };
+
+            localStorage.setItem('formData', JSON.stringify(updatedFormData));
+            window.location.href = 'profession.html';
+        }
+
+        function goBack() {
+            window.location.href = 'address.html';
+        }
+    </script>
+</body>
+</html>
