@@ -28,6 +28,10 @@ Make sure you have the following installed on your local development machine:
 - npm (v6 or higher)
 - MongoDB (v4.2 or higher)
 
+## Start the application
+
+nodemon app.js
+
 ## Set up your environment variables:
 ###Create a .env file in the root directory of your project and add the following:
 
