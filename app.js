@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/VyzenNewFormSubmission', {
+mongoose.connect('mongodb+srv://huligeshbondade:sp9t454fK3H3ASmr@cluster0.nbqfwia.mongodb.net/VyzForm', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
