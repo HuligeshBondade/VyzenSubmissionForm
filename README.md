@@ -10,7 +10,8 @@ Vyzen Submission Form is a simple web application built with Node.js and Express
 
 <img src="https://github.com/HuligeshBondade/VyzenSubmissionForm/assets/107861136/9495a8c2-c0b7-47e9-b650-bde14e60ebaa" alt="Screenshot" width="400">
 
-- [https://vyzen-submission-form-qrw81ae2q-huligeshs-projects.vercel.app/](https://vyzen-submission-form.vercel.app/)
+
+[https://vyzen-submission-form-qrw81ae2q-huligeshs-projects.vercel.app/](https://vyzen-submission-form.vercel.app/)
 
 ## Features
 
@@ -32,7 +33,7 @@ Make sure you have the following installed on your local development machine:
 nodemon app.js
 
 ## Set up your environment variables:
-###Create a .env file in the root directory of your project and add the following:
+### Create a .env file in the root directory of your project and add the following:
 
 - PORT=3500
 - MONGO_URI=mongodb://localhost:27017/VyzenNewFormSubmission
